@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<body>
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-content">
+          <!-- ***** Banner Start ***** -->
+          <div class="main-banner">
+            <div class="row">
+                <center>
+                    <div class="col-lg-7">
+                        <h4><em>404</em></h4>
+                        <div class="header-text">
+                            <h4>Страница не найдена</h4>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="main-button">
+                                <a href="{% url 'index' %}">Вернуться на главную</a>
+                            </div>
+                        </div>
+                    </div>
+                </center>
+            </div>
+          </div>
+          <!-- ***** Banner End ***** -->
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+{% endblock %}
+  </body>
+

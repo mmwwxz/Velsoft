@@ -1,0 +1,142 @@
+{% load static %}
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <title>Velsoft</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/templatemo-cyborg-gaming.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+
+<!--
+
+TemplateMo 579 Cyborg Gaming
+
+https://templatemo.com/tm-579-cyborg-gaming
+
+-->
+  </head>
+
+  <style>
+        .nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav li {
+            list-style: none;
+            margin: 0 10px; /* Добавьте отступы между элементами по необходимости */
+        }
+
+        .nav li .form-select {
+            width: auto; /* Установите авто ширину или определенное значение */
+            background-color: #27292a; /* Установите цвет фона */
+            color: #fff; /* Установите цвет текста */
+            border: none; /* Удалите рамку */
+            padding: 5px; /* Добавьте отступы для улучшения внешнего вида */
+            border-radius: 4px; /* Слегка закруглите углы */
+            vertical-align: middle; /* Выравнивание по вертикали */
+        }
+  </style>
+
+<body>
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="{% url 'index' %}" class="logo" style="font-size: 35px;color: #ec6090;max-width: 150px;">
+                        Velsoft
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Search End ***** -->
+                    <div class="search-input">
+                      <form id="search" method="get" action="{% url 'product_list' %}">
+                        <input type="text" placeholder="Найти товар" id='searchText' name="search" onkeypress="handle" />
+                        <i class="fa fa-search"></i>
+                      </form>
+                    </div>
+                    <!-- ***** Search End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="{% url 'index' %}" class="active">Главная</a></li>
+                        <li><a href="{% url 'product_list' %}">Список товаров</a></li>
+                        {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'create' %}">Добавить товар</a></li>
+                            <li><a href="{% url 'report' %}">Проданные товары</a></li>
+                        {% endif %}
+                        <li>
+                            <select class="form-select" aria-label="Default select example" onchange="handleSelectChange(this)">
+                                {% if request.user.is_authenticated %}
+                                    <option selected style="text-align: center;">{{ request.user.username }}</option>
+                                    {% if request.user.is_superuser %}
+                                        <option value="{% url 'register' %}">Регистрация</option>
+                                    {% endif %}
+                                    <option value="{% url 'logout' %}">Выйти</option>
+                                {% else %}
+                                    <option selected style="text-align: center;">Авторизация</option>
+                                    <option value="{% url 'login' %}">Войти</option>
+                                {% endif %}
+                            </select>
+                        </li>
+                    </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+{% block content %}
+{% endblock %}
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Авторские права © 2024 <a href="https://t.me/bilal_kubatbekov">BilalHolding</a>. Все права защищены.
+
+          <br>Дизайн: <a href="https://templatemo.com" target="_blank" title="free CSS templates">Bilal Kubatbekov</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+  <script src="{% static 'js/isotope.min.js' %}"></script>
+  <script src="{% static 'js/owl-carousel.js' %}"></script>
+  <script src="{% static 'js/tabs.js' %}"></script>
+  <script src="{% static 'js/popup.js' %}"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
+<script>
+function handleSelectChange(selectElement) {
+    const value = selectElement.value;
+    if (value) {
+        window.location.href = value;
+    }
+}
+</script>
+</body>
+</html>

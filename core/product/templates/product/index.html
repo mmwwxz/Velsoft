@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<body>
+{% block content %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-content">
+          {% if messages %}
+            <div class="container">
+              <div class="row">
+                <div class="col-md-8 offset-md-2">
+                  {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {% else %}
+                          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                          {% endif %}
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>
+                        {% endfor %}
+                      </div>
+                </div>
+              </div>
+            {% endif %}
+          <!-- ***** Banner Start ***** -->
+          <div class="main-banner">
+            <div class="row">
+              <div class="col-lg-7">
+                <div class="header-text">
+                  <h6>Добро пожаловать на склад!</h6>
+                  <h4><em>Здесь</em> Вы можете вести учет товаров</h4>
+                  <div class="main-button">
+                    <a href="browse.html">Browse Now</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ***** Banner End ***** -->
+
+          <!-- ***** Most Popular Start ***** -->
+          <div class="most-popular">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="heading-section">
+                  <h4><em>Товары</em> на складе</h4>
+                </div>
+                <div class="row">
+                  {% for product in products %}
+                    <div class="col-lg-3 col-sm-6">
+                      <a href="{% url 'detail' product.id %}">
+                        <div class="item">
+                          <img src="{{ product.image.url }}" style="width: 100%; height: 200px; object-fit: contain;" alt="">
+                          <h4>Название: <br><span style="color: white;">Количество: </span></h4>
+                          <ul>
+                            <li> {{ product.title|truncatechars:18 }}</li>
+                            <li><i class="fa fa-download"></i> {{ product.quantity }}</li>
+                          </ul>
+                        </div>
+                      </a>
+                    </div>
+                  {% endfor %}
+                  <div class="col-lg-12">
+                    <div class="main-button">
+                      <a href="{% url 'product_list' %}">Посмотреть все товары</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ***** Most Popular End ***** -->
+        {% if request.user.is_authenticated %}
+          <!-- ***** Gaming Library Start ***** -->
+          <div class="gaming-library">
+            <div class="col-lg-12">
+              <div class="heading-section">
+                <h4><em>Проданные</em> Товары</h4>
+              </div>
+              {% for sold_product in sold_products %}
+              <a href="{% url 'sold_product_detail' sold_product.id %}">
+                <div class="item">
+                  <ul>
+                    <li><img src="{{ sold_product.product.image.url }}" alt="" class="templatemo-item"></li>
+                    <li><h4>{{ sold_product.product.title }}</h4><span>{{ sold_product.product.color }}</span></li>
+                    <li><h4>Дата продажи:</h4><span>{{ sold_product.sale_date }}</span></li>
+                    <li><h4>Продано:</h4><span>{{ sold_product.quantity }}</span></li>
+                    <li><h4>Сумма продажи:</h4><span>{{ sold_product.total_price }} cом</span></li>
+                    <li><h4>Статус:</h4><span>{{ sold_product.get_status_display }}</span></li>
+                  </ul>
+                </div>
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+          <center>
+            <div class="col-lg-12">
+              <div class="main-button">
+                <a href="{% url 'report' %}">Посмотреть все</a>
+              </div>
+            </div>
+          </center>
+          </div>
+          {% endif %}
+          <!-- ***** Gaming Library End ***** -->
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+  </body>
+
